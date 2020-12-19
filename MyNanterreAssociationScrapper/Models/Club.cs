@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MyNanterreAssociationScrapper
+namespace MyNanterreAssociationScrapper.Models
 {
 	public class Club
 	{
@@ -65,5 +65,10 @@ namespace MyNanterreAssociationScrapper
 			ImageAsString = imagAsString;
 		}
         #endregion
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

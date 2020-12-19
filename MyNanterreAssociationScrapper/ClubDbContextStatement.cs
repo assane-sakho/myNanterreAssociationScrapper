@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyNanterreAssociationScrapper.Models;
+using System;
 using System.Configuration;
 
 namespace MyNanterreAssociationScrapper

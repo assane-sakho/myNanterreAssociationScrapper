@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using MyNanterreAssociationScrapper.Models;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
@@ -67,10 +68,10 @@ namespace MyNanterreAssociationScrapper
                                                   .FindElements(By.ClassName("lien_interne"));
 
                 foreach (IWebElement association in associations)
-                    clubType.AddClub(new Club(association.Text, association.GetAttribute("href"), clubType));
+                    clubType.Clubs.Add(new Club(association.Text, association.GetAttribute("href"), clubType));
             }
 
-            _clubs = _clubTypes.SelectMany(clubType => clubType.GetClubs()).ToList();
+            _clubs = _clubTypes.SelectMany(clubType => clubType.Clubs).ToList();
 
             return this;
         }
@@ -90,10 +91,10 @@ namespace MyNanterreAssociationScrapper
             string legend;
             string infosXpath;
 
-            Club club;
-            for(int i = 0; i < _clubs.Count; i++)
+            List<Club> clubsToRemove = new List<Club>();
+
+            foreach (Club club in _clubs)
             {
-                club = _clubs[i];
                 _driver.Navigate().GoToUrl(club.Url);
 
                 try
@@ -115,8 +116,8 @@ namespace MyNanterreAssociationScrapper
                         imageUrl = String.Empty;
                     }
 
-                    description = legend != String.Empty ? objetWebElement.Text.Replace(legend, "") : objetWebElement.Text;
-
+                    description = !String.IsNullOrEmpty(legend) ? objetWebElement.Text.Replace(legend, "") : objetWebElement.Text;
+                  
                     infosXpath = "//*[@id=\"avec_nav_sans_encadres\"]/div/dl";
 
                     infosWebElement = _driver.FindElement(By.XPath(infosXpath));
@@ -144,10 +145,15 @@ namespace MyNanterreAssociationScrapper
                 }
                 catch (Exception ex)
                 {
-                    club.ClubType.RemoveClub(club);
-                    _clubs.Remove(club);
-                    Console.WriteLine(ex.Message);
+                    clubsToRemove.Add(club);
+                    Console.WriteLine($"{club.Name} : {ex.Message}");
                 }
+            }
+
+            foreach (Club clubToRemove in clubsToRemove)
+            {
+                clubToRemove.ClubType.Clubs.Remove(clubToRemove);
+                _clubs.Remove(clubToRemove);
             }
 
             CloseDriver();

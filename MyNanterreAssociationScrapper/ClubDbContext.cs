@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using MyNanterreAssociationScrapper.Models;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -40,7 +41,7 @@ namespace MyNanterreAssociationScrapper
             {
                 SetClubTypeId(clubType);
 
-                foreach (var club in clubType.GetClubs())
+                foreach (var club in clubType.Clubs)
                     InsertOrUpdateClubToDB(club);
             }
 
