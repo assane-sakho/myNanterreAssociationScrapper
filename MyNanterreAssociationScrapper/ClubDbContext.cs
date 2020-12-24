@@ -33,7 +33,7 @@ namespace MyNanterreAssociationScrapper
         {
             _mySqlConnection.Open();
             
-            ExecuteNonQuery("SET GLOBAL max_allowed_packet=16777216;");
+            //ExecuteNonQuery("SET GLOBAL max_allowed_packet=16777216;");
 
             List<ClubType> clubTypes = _clubs.Select(club => club.ClubType).Distinct().ToList();
 

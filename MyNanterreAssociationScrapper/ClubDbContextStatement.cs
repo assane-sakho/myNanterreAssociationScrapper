@@ -50,22 +50,21 @@ namespace MyNanterreAssociationScrapper
                 "club_type_id, " +
                 "website, " +
                 "mail, " +
-                "contact," +
-                "nanterreWebsiteUrl," +
-                "image)" +
+                "contact, " +
+                "nanterreWebsiteUrl" +
+                $"{(String.IsNullOrEmpty(club.ImageUrl) ? ")" : ", image_url)")}" +
 
-               $"VALUES ('{FormatStr(club.Name)}', " +
-               $"'{FormatStr(club.Description)}', " +
-               $"1, " +
-               $"1, " +
-               $"{_dbCreatorId}, " +
-               $"'{club.ClubType.Id}', ";
-                stm += !String.IsNullOrEmpty(club.WebsiteUrl) ? "'" + FormatStr(club.WebsiteUrl) + "'," : "NULL, ";
-                stm += !String.IsNullOrEmpty(club.Mail) ? "'" + FormatStr(club.Mail) + "'," : "NULL, ";
-                stm += !String.IsNullOrEmpty(club.Contact) ? "'" + FormatStr(club.Contact) + "'," : "NULL, ";
-                stm += 
-                $"'{FormatStr(club.Url)}', " +
-                $"'{club.ImageAsString}'); ";
+                $"VALUES ('{FormatStr(club.Name)}', " +
+                $"'{FormatStr(club.Description)}', " +
+                $"1, " +
+                $"1, " +
+                $"{_dbCreatorId}, " +
+                $"'{club.ClubType.Id}', " +
+                $"{(String.IsNullOrEmpty(club.WebsiteUrl) ? "'" + FormatStr(club.WebsiteUrl) + "'" : "NULL")}, " +
+                $"{(String.IsNullOrEmpty(club.Mail) ? "'" + FormatStr(club.Mail) + "'" : "NULL")}, " +
+                $"{(String.IsNullOrEmpty(club.Contact) ? "'" + FormatStr(club.Contact) + "'" : "NULL")}, " +
+                $"'{FormatStr(club.Url)}'" +
+                $"{(String.IsNullOrEmpty(club.ImageUrl) ? ");" : ", '" + club.ImageUrl + "');")}";
 
             return stm;
         }
@@ -79,15 +78,17 @@ namespace MyNanterreAssociationScrapper
                 "is_certificate = 1, " +
                 "is_validate = 1, " +
                 $"description = '{FormatStr(club.Description)}', " +
-                $"club_type_id = '{club.ClubType.Id}',  ";
-                stm += "website=" + (!String.IsNullOrEmpty(club.WebsiteUrl) ? "'" + FormatStr(club.WebsiteUrl) + "'," : "NULL, ");
-                stm += "mail=" + (!String.IsNullOrEmpty(club.Mail) ? "'" + FormatStr(club.Mail) + "'," : "NULL, ") ;
-                stm += "contact=" + (!String.IsNullOrEmpty(club.Contact) ? "'" + FormatStr(club.Contact) + "'," : "NULL, ");
-                stm +=
                 $"club_type_id = '{club.ClubType.Id}',  " +
-                $"nanterreWebsiteUrl='{FormatStr(club.Url)}' " +
+                $"website = {(String.IsNullOrEmpty(club.WebsiteUrl) ? "'" + FormatStr(club.WebsiteUrl) + "'" : "NULL")}, " +
+                $"mail = {(String.IsNullOrEmpty(club.Mail) ? "'" + FormatStr(club.Mail) + "'" : "NULL")}, " +
+                $"contact = {(String.IsNullOrEmpty(club.Contact) ? "'" + FormatStr(club.Contact) + "'" : "NULL")}, " +
+                $"club_type_id = '{club.ClubType.Id}',  " +
+                $"nanterreWebsiteUrl='{FormatStr(club.Url)}' ";
 
-                $"WHERE name='{FormatStr(club.Name)}' ;";
+            if(!String.IsNullOrEmpty(club.ImageUrl))
+                stm += $", image_url = '{club.ImageUrl}' ";
+
+            stm += $"WHERE name='{FormatStr(club.Name)}' ;";
 
             return stm;
         }
