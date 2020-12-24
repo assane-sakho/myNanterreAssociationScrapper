@@ -60,9 +60,9 @@ namespace MyNanterreAssociationScrapper
                 $"1, " +
                 $"{_dbCreatorId}, " +
                 $"'{club.ClubType.Id}', " +
-                $"{(String.IsNullOrEmpty(club.WebsiteUrl) ? "'" + FormatStr(club.WebsiteUrl) + "'" : "NULL")}, " +
-                $"{(String.IsNullOrEmpty(club.Mail) ? "'" + FormatStr(club.Mail) + "'" : "NULL")}, " +
-                $"{(String.IsNullOrEmpty(club.Contact) ? "'" + FormatStr(club.Contact) + "'" : "NULL")}, " +
+                $"{(!String.IsNullOrEmpty(club.WebsiteUrl) ? "'" + FormatStr(club.WebsiteUrl) + "'" : "NULL")}, " +
+                $"{(!String.IsNullOrEmpty(club.Mail) ? "'" + FormatStr(club.Mail) + "'" : "NULL")}, " +
+                $"{(!String.IsNullOrEmpty(club.Contact) ? "'" + FormatStr(club.Contact) + "'" : "NULL")}, " +
                 $"'{FormatStr(club.Url)}'" +
                 $"{(String.IsNullOrEmpty(club.ImageUrl) ? ");" : ", '" + club.ImageUrl + "');")}";
 
@@ -79,9 +79,9 @@ namespace MyNanterreAssociationScrapper
                 "is_validate = 1, " +
                 $"description = '{FormatStr(club.Description)}', " +
                 $"club_type_id = '{club.ClubType.Id}',  " +
-                $"website = {(String.IsNullOrEmpty(club.WebsiteUrl) ? "'" + FormatStr(club.WebsiteUrl) + "'" : "NULL")}, " +
-                $"mail = {(String.IsNullOrEmpty(club.Mail) ? "'" + FormatStr(club.Mail) + "'" : "NULL")}, " +
-                $"contact = {(String.IsNullOrEmpty(club.Contact) ? "'" + FormatStr(club.Contact) + "'" : "NULL")}, " +
+                $"website = {(!String.IsNullOrEmpty(club.WebsiteUrl) ? "'" + FormatStr(club.WebsiteUrl) + "'" : "NULL")}, " +
+                $"mail = {(!String.IsNullOrEmpty(club.Mail) ? "'" + FormatStr(club.Mail) + "'" : "NULL")}, " +
+                $"contact = {(!String.IsNullOrEmpty(club.Contact) ? "'" + FormatStr(club.Contact) + "'" : "NULL")}, " +
                 $"club_type_id = '{club.ClubType.Id}',  " +
                 $"nanterreWebsiteUrl='{FormatStr(club.Url)}' ";
 
