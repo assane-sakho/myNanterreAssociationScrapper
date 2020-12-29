@@ -116,7 +116,7 @@ namespace MyNanterreAssociationScrapper
                         imageUrl = String.Empty;
                     }
 
-                    description = !String.IsNullOrEmpty(legend) ? objetWebElement.Text.Replace(legend, "") : objetWebElement.Text;
+                    description = !String.IsNullOrEmpty(legend) ? objetWebElement.Text.Replace(legend, "").Remove(0, 2) : objetWebElement.Text;
                   
                     infosXpath = "//*[@id=\"avec_nav_sans_encadres\"]/div/dl";
 
